@@ -54,4 +54,23 @@ class Functions
         }
         return false;
     }
+
+    public function read($record_num,$records_per_page)
+    {
+        $query = "SELECT * FROM products LIMIT {$record_num},{$records_per_page}";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    public function count()
+    {
+        $query = "SELECT COUNT(*) as total_rows FROM products";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row['total_rows'];
+    }
 }
