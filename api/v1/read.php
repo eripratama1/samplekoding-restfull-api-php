@@ -32,54 +32,65 @@ $stmt = $functions->read($record_num, $records_per_page);
  */
 $num = $stmt->rowCount();
 
-/**
- *  Melakukan pengecekan apakah ada lebih dari 0 baris yang ditemukan oleh query sebelumnya. 
- *  Jika ya, maka memproses hasilnya. Jika tidak, mengirimkan respons 404 (Not Found)
- */
-if ($num > 0) {
-
-    /** Inisialisasi array untuk menyimpan hasil query */
-    $products_arr = array(); 
-
-    /** Array untuk menyimpan data produk */
-    $products_arr["records"] = array();
-
-    /** Array untuk informasi halaman */
-    $products_arr["paging"] = array();
-
-    /**
-     * Melakukan iterasi melalui hasil query dan menyusun data produk ke dalam array. 
-     * Setiap produk direpresentasikan sebagai asosiasi array yang kemudian dimasukkan ke dalam array 
-     * $products_arr["records"].
-     */
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
-
-        /** Menyusun data produk ke dalam array */
-        $product_item = array(
-            "name" => $name,
-            "description" => $description,
-            "price" => $price
-        );
-        array_push($products_arr["records"], $product_item);
+try {
+    if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+        http_response_code(405);
+        echo json_encode(array("message" => "Method not allowed. Use method GET"));
+        return;
     }
 
     /**
-     * Mendapatkan informasi halaman untuk paginasi 
-     * seperti total baris, baris per halaman, total halaman, dan halaman saat ini. 
-     * Informasi ini ditambahkan ke dalam array $products_arr["paging"]
-    */
-    $total_rows = $functions->count();
-    $page_info = array(
-        "total_rows" => $total_rows,
-        "records_per_page" => $records_per_page,
-        "total_pages" => ceil($total_rows / $records_per_page),
-        "current_page" => $page
-    );
-    $products_arr["paging"] = $page_info;
-    http_response_code(200);
-    echo json_encode($products_arr);
-} else {
-    http_response_code(404);
-    echo json_encode(array("message" => "No products found"));
+     *  Melakukan pengecekan apakah ada lebih dari 0 baris yang ditemukan oleh query sebelumnya. 
+     *  Jika ya, maka memproses hasilnya. Jika tidak, mengirimkan respons 404 (Not Found)
+     */
+    if ($num > 0) {
+
+        /** Inisialisasi array untuk menyimpan hasil query */
+        $products_arr = array();
+
+        /** Array untuk menyimpan data produk */
+        $products_arr["records"] = array();
+
+        /** Array untuk informasi halaman */
+        $products_arr["paging"] = array();
+
+        /**
+         * Melakukan iterasi melalui hasil query dan menyusun data produk ke dalam array. 
+         * Setiap produk direpresentasikan sebagai asosiasi array yang kemudian dimasukkan ke dalam array 
+         * $products_arr["records"].
+         */
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+
+            /** Menyusun data produk ke dalam array */
+            $product_item = array(
+                "name" => $name,
+                "description" => $description,
+                "price" => $price
+            );
+            array_push($products_arr["records"], $product_item);
+        }
+
+        /**
+         * Mendapatkan informasi halaman untuk paginasi 
+         * seperti total baris, baris per halaman, total halaman, dan halaman saat ini. 
+         * Informasi ini ditambahkan ke dalam array $products_arr["paging"]
+         */
+        $total_rows = $functions->count();
+        $page_info = array(
+            "total_rows" => $total_rows,
+            "records_per_page" => $records_per_page,
+            "total_pages" => ceil($total_rows / $records_per_page),
+            "current_page" => $page
+        );
+        $products_arr["paging"] = $page_info;
+        http_response_code(200);
+        echo json_encode($products_arr);
+    } else {
+        http_response_code(404);
+        echo json_encode(array("message" => "No products found"));
+    }
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(array("message" => "Internal server error :" . $e->getMessage()));
 }

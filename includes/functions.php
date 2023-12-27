@@ -106,4 +106,35 @@ class Functions
 
         return $stmt;
     }
+
+    /**
+     * Method update disini sama dengan method create
+     * yang membedakannya proses querynya dan parameter yang digunakan
+     */
+    public function update($id, $name, $description, $price)
+    {
+        $query = "UPDATE products set name=:name, description=:description, price=:price WHERE id=:id";
+        $stmt = $this->conn->prepare($query);
+
+        $id = htmlspecialchars(strip_tags($id));
+        $name = htmlspecialchars(strip_tags($name));
+        $description = htmlspecialchars(strip_tags($description));
+        $price = htmlspecialchars(strip_tags($price));
+
+        /**
+         * Mengaitkan nilai ke parameter dalam query SQL
+         */
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":description", $description);
+        $stmt->bindParam(":price", $price);
+
+        /**
+         * Mengeksekusi statement SQL yang sudah dibuat sebelumnya
+         */
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
