@@ -137,4 +137,19 @@ class Functions
         }
         return false;
     }
+
+    /**
+     * Method delete data berdasarkan id 
+     */
+    public function delete($id)
+    {
+        $query = "DELETE FROM products WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1,$id);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
