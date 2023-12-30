@@ -145,11 +145,32 @@ class Functions
     {
         $query = "DELETE FROM products WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1,$id);
+        $stmt->bindParam(1, $id);
 
         if ($stmt->execute()) {
             return true;
         }
         return false;
+    }
+
+    public function search($keywords)
+    {
+
+        $query = "SELECT * FROM products WHERE name LIKE ?";
+        $stmt = $this->conn->prepare($query);
+        
+        /** Membersihkan dan mengamankan nilai 'keywords' dari input pengguna */
+        $keywords = htmlspecialchars(strip_tags($keywords));
+
+        /** Menambahkan wildcard (%) untuk mencocokkan kata kunci di bagian manapun dari nama produk */
+        $keywords = "%{$keywords}%";
+
+        /** Mengikat parameter kata kunci ke statement SQL */
+        $stmt->bindParam(1, $keywords);
+
+        /** Mengeksekusi statement SQL */
+        $stmt->execute();
+
+        return $stmt;
     }
 }
