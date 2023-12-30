@@ -1,7 +1,7 @@
 Running server PHP : php -S localhost:8000
 
 List endpoint :
-    - Create (http://localhost:8000/api/v1/create.php) use method POST
+- Create (http://localhost:8000/api/v1/create.php) use method POST
       Sample request (
         JSON format
         {
@@ -10,7 +10,7 @@ List endpoint :
             "price":112233445566,
         }
       )
-    - Read   (http://localhost:8000/api/v1/read.php) use method GET
+- Read   (http://localhost:8000/api/v1/read.php) use method GET
     - Update (http://localhost:8000/api/v1/update.php) use method PUT or PATCH
       Sample request (
         JSON format
