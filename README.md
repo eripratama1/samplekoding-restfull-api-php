@@ -22,6 +22,7 @@ Request : JSON format {
 ```php
 URL          : http://localhost:8000/api/v1/read.php
 URL Paginasi : http://localhost:8000/api/v1/read.php?page=numberpage
+URL single data : http://localhost:8000/api/v1/detail.php?id=id
 method  : GET
 ```
 
