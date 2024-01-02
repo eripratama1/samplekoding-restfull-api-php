@@ -20,14 +20,15 @@ Request : JSON format {
 - #### EndPoint Read data
 
 ```php
-URL     : http://localhost:8000/api/v1/create.php
+URL          : http://localhost:8000/api/v1/read.php
+URL Paginasi : http://localhost:8000/api/v1/read.php?page=numberpage
 method  : GET
 ```
 
 - #### EndPoint Update data
 
 ```php
-URL     : http://localhost:8000/api/v1/udpate.php
+URL     : http://localhost:8000/api/v1/update.php
 method  : PUT or PATCH
 Request : JSON format {
  "id":1122
@@ -39,7 +40,7 @@ Request : JSON format {
 - #### EndPoint Delete data
 
 ```php
-URL     : http://localhost:8000/api/v1/udpate.php
+URL     : http://localhost:8000/api/v1/delete.php
 method  : DELETE
 Request : JSON format {
  "id":id
