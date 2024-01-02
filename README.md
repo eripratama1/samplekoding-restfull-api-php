@@ -1,29 +1,54 @@
-Running server PHP : php -S localhost:8000
+## Restful API PHP 8
 
-List endpoint :
-- Create (http://localhost:8000/api/v1/create.php) use method POST
-Sample request : JSON format
-{
-      "name":"Nama Produk",
-      "description":"Produk deskripsi",
-      "price":112233445566,
+```markdown
+Running server php : php -S localhost:NomorPort
+```
+
+### List endpoint :
+- #### EndPoint Create data
+
+```php
+URL     : http://localhost:8000/api/v1/create.php
+method  : POST
+Request : JSON format {
+ "name":"Nama Produk",
+ "description":"Produk deskripsi",
+ "price":112233445566,
 }
+```
 
-- Read   (http://localhost:8000/api/v1/read.php) use method GET
+- #### EndPoint Read data
 
-- Update (http://localhost:8000/api/v1/update.php) use method PUT or PATCH
-  Sample request : JSON format
-  {
-       "id":1122
-       "name":"Nama Produk",
-       "description":"Produk deskripsi",
-       "price":112233445566,
-   }
-      
-- Delete (http://localhost:8000/api/v1/delete.php) use method DELETE
-  Sample request : JSON format
-  {
-       "id":"Id Produk",
-  }
-  
-- Search (http://localhost:8000/api/v1/search.php?keyword=namaProduk) use method GET
+```php
+URL     : http://localhost:8000/api/v1/create.php
+method  : GET
+```
+
+- #### EndPoint Update data
+
+```php
+URL     : http://localhost:8000/api/v1/udpate.php
+method  : PUT or PATCH
+Request : JSON format {
+ "id":1122
+ "name":"Nama Produk",
+ "description":"Produk deskripsi",
+ "price":112233445566,
+}
+```
+- #### EndPoint Delete data
+
+```php
+URL     : http://localhost:8000/api/v1/udpate.php
+method  : DELETE
+Request : JSON format {
+ "id":id
+}
+```
+
+- #### EndPoint Search data
+
+```php
+URL     : http://localhost:8000/api/v1/search.php?keyword=namaProduk
+method  : GET
+```
